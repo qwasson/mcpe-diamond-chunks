@@ -133,14 +133,17 @@ function modTick() {
 			catch(e){
 				clientMessage("Line 108: " + e);
 			}
+
+            currentX = newX;
+        	currentY = newY;
+	        currentZ = newZ;
+    
+            currentChunkX = newChunkX;
+            currentChunkZ = newChunkZ;
+
 		}}));
 
-        currentX = newX;
-    	currentY = newY;
-	    currentZ = newZ;
-    
-        currentChunkX = newChunkX;
-        currentChunkZ = newChunkZ;
+        
 	}
 }
 
