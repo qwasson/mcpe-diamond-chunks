@@ -59,8 +59,11 @@ function main(p) {
 			break;
 		case "nodiamond" :
 		case "nodiamonds" :
-		    clientMessage("no diamonds here");
+		    saveDiamondInfoForChunk(getChunkForCoord(Player.getX()),getChunkForCoord(Player.getZ()),"");
 		    break;
+        case "adddiamond":
+        case "adddiamonds":
+            saveDiamondInfoForChunk(getChunkForCoord(Player.getX()),getChunkForCoord(Player.getZ()),"0");
 	}
 }
 
@@ -141,9 +144,7 @@ function modTick() {
             currentChunkX = newChunkX;
             currentChunkZ = newChunkZ;
 
-		}}));
-
-        
+		}}));        
 	}
 }
 
@@ -153,30 +154,37 @@ function getChunkForCoord(coord) {
 
 function loadDiamondInfoForChunk(chunkX, chunkZ) {
 
-    if( chunkX == chunkZ) {
-		knowAboutDiamondInCurrentChunk = false;     // ?
-		positionOfDiamondInCurrentChunk = "-1";     // N/A
-	} else 	if( chunkX > chunkZ) {
-		knowAboutDiamondInCurrentChunk = true;      // x
-		positionOfDiamondInCurrentChunk = "-1";     // 
-	} else {
-        knowAboutDiamondInCurrentChunk = true;      // f
-		positionOfDiamondInCurrentChunk = "5";		 // f
-	}
+ //    if( chunkX == chunkZ) {
+	// 	knowAboutDiamondInCurrentChunk = false;     // ?
+	// 	positionOfDiamondInCurrentChunk = "-1";     // N/A
+	// } else 	if( chunkX > chunkZ) {
+	// 	knowAboutDiamondInCurrentChunk = true;      // x
+	// 	positionOfDiamondInCurrentChunk = "-1";     // 
+	// } else {
+ //        knowAboutDiamondInCurrentChunk = true;      // f
+	// 	positionOfDiamondInCurrentChunk = "5";		 // f
+	// }
 
-	clientMessage("loadDiamondInfoForChunk: x: " + chunkX + "z: " + chunkZ + " know: " + knowAboutDiamondInCurrentChunk + " pos: " + positionOfDiamondInCurrentChunk);
+    // load value from pref file
+    var value = ModPE.getData(getPreferenceName(chunkX, chunkZ));
 
+    if(value == "") {
+        knowAboutDiamondInCurrentChunk = false;     // ?
+        positionOfDiamondInCurrentChunk = "-1";     // N/A
+    } else {
+        knowAboutDiamondInCurrentChunk = true;      // x
+        positionOfDiamondInCurrentChunk = value;     // 
+    }
 
-    // TODO
-	// load value from pref file
+    clientMessage("loadDiamondInfoForChunk: x: " + chunkX + "z: " + chunkZ + " know: " + knowAboutDiamondInCurrentChunk + " pos: " + positionOfDiamondInCurrentChunk);
+}
 
-	// if value == "", unknown
-	// if value == "-1", no diamond here
-	// else diamond was here at y=value
+function getPreferenceName(chunkX, chunkZ) {
+    return Level.getWorldName() + "-" + chunkX + "-" + chunkZ;
 }
 
 function saveDiamondInfoForChunk(chunkX, chunkZ, y) {
-    //ModPE.saveData(worldanme + "-" + chunkX + "-" + chunkZ, y)
+    ModPE.saveData(getPreferenceName(chunkX, chunkZ), y)
 }
 
 function dismissChunks() {
@@ -208,9 +216,12 @@ function useItem(x,y,z,itemId,blockId,side) {
 	if (blockId==56) {
         clientMessage("You touched diamond");
 
-        // TODO If there isn't a file for this chunk, create it
-        knowAboutDiamondInCurrentChunk = true;
-        positionOfDiamondInCurrentChunk = "" + y;
+        if(!knowAboutDiamondInCurrentChunk) {
+            // If there isn't a file for this chunk, create it
+            knowAboutDiamondInCurrentChunk = true;
+            positionOfDiamondInCurrentChunk = "" + y;
+            saveDiamondInfoForChunk(getChunkForCoord(x),getChunkForCoord(z),"" + y);
+        }
     }
 
     if (blockId==16) {
