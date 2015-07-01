@@ -124,7 +124,7 @@ function modTick() {
 				                 prefix + "Z: " + Math.floor(newZ) + " (" +getChunkForCoord(Player.getZ()) + ")");
 			}
 			catch(e){
-				errorMsg("Line 108: " + e);
+				clientMessage("Line 108: " + e);
 			}
 		}}));
 	}
