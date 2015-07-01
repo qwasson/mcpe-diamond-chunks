@@ -134,14 +134,14 @@ function modTick() {
 				clientMessage("Line 108: " + e);
 			}
 		}}));
-	}
 
-	currentX = newX;
-	currentY = newY;
-	currentZ = newZ;
+        currentX = newX;
+    	currentY = newY;
+	    currentZ = newZ;
     
-    currentChunkX = newChunkX;
-    currentChunkZ = newChunkZ;
+        currentChunkX = newChunkX;
+        currentChunkZ = newChunkZ;
+	}
 }
 
 function getChunkForCoord(coord) {
