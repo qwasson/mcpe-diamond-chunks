@@ -119,9 +119,9 @@ function modTick() {
                 	prefix = "?"
                 }
 
-				textview.setText(prefix + "X: " + Math.floor(newX) + " (" + Math.floor(Player.getX() / 16) + ")" + "\n" + 
+				textview.setText(prefix + "X: " + Math.floor(newX) + " (" + getChunkForCoord(Player.getX()) + ")" + "\n" + 
 				                 prefix + "Y: " + Math.floor(newY) + "\n" + 
-				                 prefix + "Z: " + Math.floor(newZ) + " (" + Math.floor(Player.getZ() / 16) + ")");
+				                 prefix + "Z: " + Math.floor(newZ) + " (" +getChunkForCoord(Player.getZ()) + ")");
 			}
 			catch(e){
 				errorMsg("Line 108: " + e);
@@ -135,6 +135,10 @@ function modTick() {
     
     currentChunkX = newChunkX;
     currentChunkZ = newChunkZ;
+}
+
+function getChunkForCoord(coord) {
+	return Math.floor(coord / 16);
 }
 
 function loadDiamondInfoForChunk(chunkX, chunkZ) {
