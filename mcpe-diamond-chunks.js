@@ -170,7 +170,7 @@ function loadDiamondInfoForChunk(chunkX, chunkZ) {
 	// }
 
     // load value from pref file
-    var value = ModPE.getData(getPreferenceName(chunkX, chunkZ));
+    var value = ModPE.readData(getPreferenceName(chunkX, chunkZ));
 
     if(value == "") {
         knowAboutDiamondInCurrentChunk = false;     // ?
