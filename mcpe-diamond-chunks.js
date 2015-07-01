@@ -77,14 +77,21 @@ function modTick() {
 
     if(showingChunks) {
 
-        var newX = Player.getX();
-        var newY = Player.getY();
-        var newZ = Player.getZ();
-
-        var newChunkX = getChunkForCoord(newX);
-        var newChunkZ = getChunkForCoord(newZ);
-
 		ctx.runOnUiThread(new java.lang.Runnable({ run: function() {
+
+            var newX = Player.getX();
+            var newY = Player.getY();
+            var newZ = Player.getZ();
+
+            var newChunkX = getChunkForCoord(newX);
+            var newChunkZ = getChunkForCoord(newZ);
+
+            var reload = false;
+
+            if(newChunkX != currentChunkX || newChunkZ != currentChunkZ) {
+                reload = true;
+            }
+
 			try {
 				if(!chunksActive) {
 				    window = new android.widget.PopupWindow();
@@ -101,7 +108,7 @@ function modTick() {
 					chunksActive = true;
 				}
 
-                if(newChunkX != currentChunkX || newChunkZ != currentChunkZ) {
+                if(reload) {
                 	// We have moved chunk, reload
                     loadDiamondInfoForChunk(newChunkX, newChunkZ);
                 }
@@ -144,14 +151,14 @@ function getChunkForCoord(coord) {
 function loadDiamondInfoForChunk(chunkX, chunkZ) {
 
     if( chunkX == chunkZ) {
-		knowAboutDiamondInCurrentChunk = false;
-		positionOfDiamondInCurrentChunk = "-1";
+		knowAboutDiamondInCurrentChunk = false;     // ?
+		positionOfDiamondInCurrentChunk = "-1";     // N/A
 	} else 	if( chunkX > chunkZ) {
-		knowAboutDiamondInCurrentChunk = true;
-		positionOfDiamondInCurrentChunk = "-1";
+		knowAboutDiamondInCurrentChunk = true;      // x
+		positionOfDiamondInCurrentChunk = "-1";     // 
 	} else {
-        knowAboutDiamondInCurrentChunk = true;
-		positionOfDiamondInCurrentChunk = "5";		
+        knowAboutDiamondInCurrentChunk = true;      // f
+		positionOfDiamondInCurrentChunk = "5";		 // f
 	}
 
 	clientMessage("loadDiamondInfoForChunk: x: " + chunkX + "z: " + chunkZ + " know: " + knowAboutDiamondInCurrentChunk + " pos: " + positionOfDiamondInCurrentChunk);
