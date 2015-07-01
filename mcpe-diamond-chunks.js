@@ -94,7 +94,7 @@ function modTick() {
 					textview.setTextColor(android.graphics.Color.GRAY);
 					layout.addView(textview);
 					window.setContentView(layout);
-					window.setWidth(dip2px(ctx, 100));
+					window.setWidth(dip2px(ctx, 200));
 					window.setHeight(dip2px(ctx, 100));
 					window.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
 					window.showAtLocation(ctx.getWindow().getDecorView(), android.view.Gravity.LEFT | android.view.Gravity.TOP, dip2px(ctx, 5), dip2px(ctx, 40));
