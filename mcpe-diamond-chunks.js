@@ -16,6 +16,8 @@ var currentZ = 0;
 var currentChunkX = 0;
 var currentChunkZ = 0;
 
+var updateLabel = false;
+
 // Have we already found diamond here?
 var knowAboutDiamondInCurrentChunk = false;
 var positionOfDiamondInCurrentChunk = "-1";
@@ -91,9 +93,11 @@ function modTick() {
 
             var reload = false;
 
-            if(newChunkX != currentChunkX || newChunkZ != currentChunkZ) {
+            if(updateLabel || newChunkX != currentChunkX || newChunkZ != currentChunkZ) {
                 reload = true;
             }
+
+            updateLabel = false;
 
 			try {
 				if(!chunksActive) {
@@ -166,7 +170,7 @@ function loadDiamondInfoForChunk(chunkX, chunkZ) {
 	// }
 
     // load value from pref file
-    var value = ModPE.readData(getPreferenceName(chunkX, chunkZ));
+    var value = ModPE.getData(getPreferenceName(chunkX, chunkZ));
 
     if(value == "") {
         knowAboutDiamondInCurrentChunk = false;     // ?
@@ -176,7 +180,7 @@ function loadDiamondInfoForChunk(chunkX, chunkZ) {
         positionOfDiamondInCurrentChunk = value;     // 
     }
 
-    clientMessage("loadDiamondInfoForChunk: x: " + chunkX + "z: " + chunkZ + " know: " + knowAboutDiamondInCurrentChunk + " pos: " + positionOfDiamondInCurrentChunk);
+    //clientMessage("loadDiamondInfoForChunk: x: " + chunkX + "z: " + chunkZ + " know: " + knowAboutDiamondInCurrentChunk + " pos: " + positionOfDiamondInCurrentChunk);
 }
 
 function getPreferenceName(chunkX, chunkZ) {
@@ -214,19 +218,13 @@ function leaveGame() {
 
 function useItem(x,y,z,itemId,blockId,side) {
 	if (blockId==56) {
-        clientMessage("You touched diamond");
-
         if(!knowAboutDiamondInCurrentChunk) {
             // If there isn't a file for this chunk, create it
             knowAboutDiamondInCurrentChunk = true;
             positionOfDiamondInCurrentChunk = "" + y;
+            updateLabel = true;
             saveDiamondInfoForChunk(getChunkForCoord(x),getChunkForCoord(z),"" + y);
         }
-    }
-
-    if (blockId==16) {
-    	// TODO remove
-        clientMessage("You touched coal");
     }
 }
 
