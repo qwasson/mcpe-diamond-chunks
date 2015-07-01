@@ -21,14 +21,7 @@ var knowAboutDiamondInCurrentChunk = false;
 var positionOfDiamondInCurrentChunk = -1;
 
 function procCmd(cmd) {
-	names = [];
-	ids = [];
-	data = [];
-
 	var params = cmd.toLowerCase().split(" ");
-	var evalParams = cmd.split(" ");
-	var moarData;
-	var dataValues;
 	ctx.runOnUiThread(
 	    new java.lang.Runnable(
 	    { 
@@ -74,6 +67,8 @@ function main(p) {
 function modTick() {
     if(active === false) {
 
+        colourMsg("Activating chunks!");
+
         loadDiamondInfoForChunk(currentChunkX, currentChunkZ);
 
         // Any startup needed?
@@ -82,7 +77,7 @@ function modTick() {
 
     if(showingChunks) {
 
-        var newX = Player.getX()
+        var newX = Player.getX();
         var newY = Player.getY();
         var newZ = Player.getZ();
 
