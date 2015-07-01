@@ -18,7 +18,7 @@ var currentChunkZ = 0;
 
 // Have we already found diamond here?
 var knowAboutDiamondInCurrentChunk = false;
-var positionOfDiamondInCurrentChunk = -1;
+var positionOfDiamondInCurrentChunk = "-1";
 
 function procCmd(cmd) {
 	var params = cmd.toLowerCase().split(" ");
@@ -110,7 +110,7 @@ function modTick() {
 
                 if(knowAboutDiamondInCurrentChunk) {
 
-                    if(positionOfDiamondInCurrentChunk == -1) {
+                    if(positionOfDiamondInCurrentChunk == "-1") {
                         prefix = "x";
                     } else {
                     	prefix = "f";
@@ -143,16 +143,19 @@ function getChunkForCoord(coord) {
 
 function loadDiamondInfoForChunk(chunkX, chunkZ) {
 
-    if( chunkX = chunkZ) {
+    if( chunkX == chunkZ) {
 		knowAboutDiamondInCurrentChunk = false;
-		positionOfDiamondInCurrentChunk = -1;
+		positionOfDiamondInCurrentChunk = "-1";
 	} else 	if( chunkX > chunkZ) {
 		knowAboutDiamondInCurrentChunk = true;
-		positionOfDiamondInCurrentChunk = -1;
+		positionOfDiamondInCurrentChunk = "-1";
 	} else {
         knowAboutDiamondInCurrentChunk = true;
-		positionOfDiamondInCurrentChunk = 5;		
+		positionOfDiamondInCurrentChunk = "5";		
 	}
+
+	clientMessage("loadDiamondInfoForChunk: x: " + chunkX + "z: " + chunkZ + " know: " + knowAboutDiamondInCurrentChunk + " pos: " + positionOfDiamondInCurrentChunk);
+
 
     // TODO
 	// load value from pref file
@@ -178,7 +181,7 @@ function dismissChunks() {
     currentChunkZ = 0;
 
     knowAboutDiamondInCurrentChunk = false;
-    positionOfDiamondInCurrentChunk = -1;
+    positionOfDiamondInCurrentChunk = "-1";
 
 	ctx.runOnUiThread(new java.lang.Runnable({ run: function() {
 		window.dismiss();
@@ -197,7 +200,7 @@ function useItem(x,y,z,itemId,blockId,side) {
 
         // TODO If there isn't a file for this chunk, create it
         knowAboutDiamondInCurrentChunk = true;
-        positionOfDiamondInCurrentChunk = y;
+        positionOfDiamondInCurrentChunk = "" + y;
     }
 
     if (blockId==16) {
