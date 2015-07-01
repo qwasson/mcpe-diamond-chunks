@@ -205,3 +205,7 @@ function useItem(x,y,z,itemId,blockId,side) {
         clientMessage("You touched coal");
     }
 }
+
+function dip2px(ctx, dips) {
+	return Math.ceil(dips * ctx.getResources().getDisplayMetrics().density);
+}
