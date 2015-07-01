@@ -1,6 +1,9 @@
 //Is the script active?
 var active = false;
 
+//A variable to store the mcpe activity
+var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+
 // Are we showing chunk coords
 var showingChunks = false;
 var chunksActive  = false;
