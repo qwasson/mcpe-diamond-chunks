@@ -50,10 +50,10 @@ function main(p) {
 		case "coordinates":
 			if(showingChunks) {
 				dismissChunks();
-				colourMsg("Showing chunks is §binactive§f!");
+				clientMessage("Showing chunks is inactive!");
 			}
 			else {
-				colourMsg("Showing chunks is §bactive§f!");
+				clientMessage("Showing chunks is active!");
 				showingChunks = true;
 			}
 			break;
@@ -67,7 +67,7 @@ function main(p) {
 function modTick() {
     if(active === false) {
 
-        colourMsg("Activating chunks!");
+        clientMessage("Activating chunks!");
 
         loadDiamondInfoForChunk(currentChunkX, currentChunkZ);
 
