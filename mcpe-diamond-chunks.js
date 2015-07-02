@@ -61,11 +61,17 @@ function main(p) {
 			break;
 		case "nodiamond" :
 		case "nodiamonds" :
+		    knowAboutDiamondInCurrentChunk = true;
+            positionOfDiamondInCurrentChunk = "-1"  
 		    saveDiamondInfoForChunk(getChunkForCoord(Player.getX()),getChunkForCoord(Player.getZ()),"");
+		    updateLabel = true;
 		    break;
         case "adddiamond":
-        case "adddiamonds":
+        case "adddiamonds":    
+            knowAboutDiamondInCurrentChunk = true;
+            positionOfDiamondInCurrentChunk = "0"        
             saveDiamondInfoForChunk(getChunkForCoord(Player.getX()),getChunkForCoord(Player.getZ()),"0");
+            updateLabel = true;
 	}
 }
 
@@ -116,7 +122,7 @@ function modTick() {
 				}
 
                 if(reload) {
-                	// We have moved chunk, reload
+                	// We have moved chunk, or the info has been updated, reload
                     loadDiamondInfoForChunk(newChunkX, newChunkZ);
                 }
 
